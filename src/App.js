@@ -9,6 +9,7 @@ function App() {
   const [grossPrice, setGrossPrice] = useState(0.0);
   const [vatToPay, setVatToPay] = useState(0.0);
   const [vatRate, setVatRate] = useState(20.0);
+  const [discPrice, setDescPrice] = useState(0.0);
 
   const handleNetPriceChange = (price) => {
     const gross_price = price * ((vatRate / 100) + 1);
@@ -19,9 +20,11 @@ function App() {
 
   const handleGrossPriceChange = (price) => {
     const net_price = price / ((vatRate / 100) + 1);
+    const disc_price = net_price * ((100/90) + 1);
     setNetPrice(net_price);
     setGrossPrice(price);
     setVatToPay(price - net_price);
+    setDiscPrice(disc_price)
   };
 
   const handleVatRateChanged = (rate) => {
@@ -41,6 +44,8 @@ function App() {
         <PriceEntryField customstyle="field" label="Price excl VAT: " priceChanged={handleNetPriceChange} price={netPrice === 0.0 ? "" : netPrice} />
         <DisplayBlock customstyle="field" label="VAT to pay: " value={vatToPay} />
         <PriceEntryField customstyle="field" label="Price incl VAT: " priceChanged={handleGrossPriceChange} price={grossPrice === 0.0 ? "" : grossPrice} />
+        <DisplayBlock customstyle="field" label="Discounted Price (-10%): " value={discPrice} />
+
       </div>
     </div>
   );
